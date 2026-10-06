@@ -55,9 +55,12 @@ function openLogin(){
  setTimeout(()=>$('#login-email')?.focus(),80);
 }
 function updateAccountUi(){
- const state=$('#settings-account-state'),logout=$('#logout-button');
+ const state=$('#settings-account-state'),logout=$('#logout-button'),avatar=$('#default-profile-avatar'),guestIcon=$('#account-toggle .account-guest-icon');
  if(state)state.textContent=t(demoLoggedIn?'signedInDemo':'signedOut');
  if(logout)logout.hidden=!demoLoggedIn;
+ if(avatar)avatar.hidden=!demoLoggedIn;
+ if(guestIcon)guestIcon.hidden=demoLoggedIn;
+ $('#account-toggle')?.classList.toggle('is-logged-in',demoLoggedIn);
 }
 function setDemoLoggedIn(){
  demoLoggedIn=true;write('kaes-demo-login','yes');updateAccountUi();
