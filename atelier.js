@@ -13,7 +13,7 @@ let lastReference=read('kaes-last-demo','');if(!/^DEMO-KAES-[A-Z0-9]+$/.test(las
 const byId=id=>P.find(p=>p.id===id),t=k=>D[lang][k]||D.en[k]||k;
 const esc=v=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const icon=id=>`<svg aria-hidden="true"><use href="#i-${id}"/></svg>`;
-const photo=id=>{const n=P.findIndex(p=>p.id===id),x=(n%3)*200,y=520+Math.floor(n/3)*165;return `<svg class="photo-crop" viewBox="${x} ${y} 200 165" preserveAspectRatio="xMidYMid slice" role="img" aria-label="KAES ${esc(byId(id).name)}"><image href="${window.KAES_PHOTO_URI}" width="600" height="1190"/></svg>`};
+const photo=id=>{const n=P.findIndex(p=>p.id===id),slot=((n%12)+12)%12,x=(slot%3)*200,y=520+Math.floor(slot/3)*165;return `<svg class="photo-crop" viewBox="${x} ${y} 200 165" preserveAspectRatio="xMidYMid slice" role="img" aria-label="KAES ${esc(byId(id).name)}"><image href="${window.KAES_PHOTO_URI}" width="600" height="1190"/></svg>`};
 const money=c=>new Intl.NumberFormat({en:'en-SE',sv:'sv-SE',ar:'ar-SE'}[lang],{style:'currency',currency:'SEK',minimumFractionDigits:0,maximumFractionDigits:2}).format(c/100);
 const price=(p,s)=>p.price+(s===30?-25000:s===100?40000:0);
 const lineUnit=i=>price(byId(i.id),i.size)+(i.gift?GIFT_WRAP:0);
