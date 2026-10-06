@@ -20,7 +20,7 @@ dialog{background:var(--panel);color:var(--ink);padding:0;border:1px solid var(-
 .photo-crop{display:block;width:100%;height:auto;overflow:hidden;stroke:none}.hero-photo .photo-crop{height:100%}.story-photo.photo-crop{height:100%}.product-detail-photo .photo-crop{aspect-ratio:1.21}.bag-row>.photo-crop{width:82px;height:92px}.summary-item .photo-crop{width:48px;height:52px}.search-result .photo-crop{width:85px;height:85px}@media(max-width:600px){.story-photo.photo-crop{height:auto;aspect-ratio:1.55}.product-detail-photo .photo-crop{height:auto;aspect-ratio:1.2}}
 
 /* Demo account sign-in */
-.login-dialog{width:min(520px,calc(100% - 28px));padding:0;overflow:visible}
+.login-dialog{width:min(520px,calc(100% - 28px));padding:0;max-height:calc(100dvh - 24px);overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable}
 .login-shell{position:relative;padding:34px 34px 30px;background:var(--panel);color:var(--ink)}
 .login-dialog .dialog-close{position:absolute;top:17px;inset-inline-end:17px}
 .login-brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px}
@@ -50,4 +50,4 @@ dialog{background:var(--panel);color:var(--ink);padding:0;border:1px solid var(-
 .login-demo-note{text-align:center;margin:18px auto 0;max-width:380px;font-family:var(--sans);font-size:9px;line-height:1.55;color:var(--muted)}
 .login-status{text-align:center;min-height:20px;margin-top:9px;font-family:var(--sans);font-size:10px;line-height:1.45;color:var(--gold)}
 [dir=rtl] .login-form,[dir=rtl] .login-shell{text-align:right}
-@media(max-width:560px){.login-shell{padding:30px 20px 24px}.login-shell h2{font-size:32px}.more-login-options{grid-template-columns:1fr}}
+@media(max-width:560px){.login-dialog{width:calc(100% - 16px);max-height:calc(100dvh - 12px);margin-block:6px}.login-shell{padding:30px 20px 34px}.login-shell h2{font-size:32px}.more-login-options{grid-template-columns:1fr}.login-form input{font-size:16px}.login-dialog .dialog-close{position:sticky;top:10px;float:inline-end;margin-top:-18px;margin-inline-end:-8px;z-index:4}}
