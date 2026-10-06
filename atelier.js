@@ -108,7 +108,6 @@ document.addEventListener('click',e=>{
 document.addEventListener('change',e=>{if(e.target.name==='delivery'&&['standard','express'].includes(e.target.value)){shipping=e.target.value;renderCheckout()}if(e.target.name==='payment'&&methods.includes(e.target.value)){method=e.target.value;renderCheckout()}});
 document.addEventListener('submit',e=>{e.preventDefault();if(e.target.id!=='coupon-form')return;const code=$('#coupon-input').value.trim().toUpperCase();if(code==='KAES10'){discount=true;save();renderBag()}else{discount=false;save();renderBag();$('#coupon-message').textContent=t('couponBad')}});
 $('#search-input').addEventListener('input',e=>renderSearch(e.target.value));$('#search-toggle').addEventListener('click',openSearch);$('#cart-toggle').addEventListener('click',openBag);
-$('#account-toggle').addEventListener('click',openLogin);
 $('#login-form').addEventListener('submit',e=>{e.preventDefault();const email=$('#login-email').value.trim();if(!email)return;$('#login-status').textContent=t('loginEmailDemo')});
 $('#theme-toggle').addEventListener('click',()=>{const theme=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=theme;write('kaes-theme',theme);$('#theme-toggle').setAttribute('aria-label',t(theme==='dark'?'light':'dark'))});
 $('#menu-toggle').addEventListener('click',()=>{const nav=$('#mobile-nav');nav.hidden=!nav.hidden;$('#menu-toggle').setAttribute('aria-expanded',String(!nav.hidden))});
