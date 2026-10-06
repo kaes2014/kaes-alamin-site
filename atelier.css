@@ -18,3 +18,36 @@ dialog{background:var(--panel);color:var(--ink);padding:0;border:1px solid var(-
 @media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 
 .photo-crop{display:block;width:100%;height:auto;overflow:hidden;stroke:none}.hero-photo .photo-crop{height:100%}.story-photo.photo-crop{height:100%}.product-detail-photo .photo-crop{aspect-ratio:1.21}.bag-row>.photo-crop{width:82px;height:92px}.summary-item .photo-crop{width:48px;height:52px}.search-result .photo-crop{width:85px;height:85px}@media(max-width:600px){.story-photo.photo-crop{height:auto;aspect-ratio:1.55}.product-detail-photo .photo-crop{height:auto;aspect-ratio:1.2}}
+
+/* Demo account sign-in */
+.login-dialog{width:min(520px,calc(100% - 28px));padding:0;overflow:visible}
+.login-shell{position:relative;padding:34px 34px 30px;background:var(--panel);color:var(--ink)}
+.login-dialog .dialog-close{position:absolute;top:17px;inset-inline-end:17px}
+.login-brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:28px}
+.login-brand img{width:34px;height:auto}
+.login-brand span{font-family:var(--serif);font-size:15px;letter-spacing:.24em}
+.login-shell>.eyebrow{text-align:center;margin-bottom:9px}
+.login-shell h2{text-align:center;font-size:39px;line-height:1.05;font-weight:400}
+.login-intro{text-align:center;color:var(--muted);font-size:15px;line-height:1.55;margin:10px auto 24px;max-width:340px}
+.social-login-grid{display:grid;gap:9px}
+.social-login{display:grid;grid-template-columns:34px 1fr 34px;align-items:center;min-height:49px;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:8px 12px;font-family:var(--sans);font-size:12px;letter-spacing:.02em;text-align:center;transition:border-color .2s,transform .2s,background .2s}
+.social-login:hover{border-color:var(--gold);background:var(--paper2);transform:translateY(-1px)}
+.provider-mark{width:26px;height:26px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;font-family:Arial,sans-serif;font-weight:700;font-size:14px;background:#fff;color:#111}
+.facebook .provider-mark{background:#1877f2;color:#fff;border-color:#1877f2}
+.apple .provider-mark{font-size:18px;font-weight:400}
+.provider-ms{border:0;border-radius:0;grid-template-columns:repeat(2,8px);grid-template-rows:repeat(2,8px);gap:2px;background:transparent}
+.provider-ms i:nth-child(1){background:#f35325}.provider-ms i:nth-child(2){background:#81bc06}.provider-ms i:nth-child(3){background:#05a6f0}.provider-ms i:nth-child(4){background:#ffba08}
+.login-divider{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--muted);font-family:var(--sans);font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+.login-divider:before,.login-divider:after{content:"";height:1px;background:var(--line);flex:1}
+.login-form{display:grid;gap:9px}
+.login-form label{font-family:var(--sans);font-size:11px;color:var(--muted)}
+.login-form input{width:100%;min-height:47px;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:12px 13px;font-family:var(--sans);font-size:13px;outline:none}
+.login-form input:focus{border-color:var(--gold);box-shadow:0 0 0 2px color-mix(in srgb,var(--gold) 18%,transparent)}
+.login-form .button{margin-top:3px}
+.login-more{display:block;margin:18px auto 0;font-family:var(--sans);font-size:11px;text-decoration:underline;text-underline-offset:4px;color:var(--muted)}
+.more-login-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.more-login-options button{min-height:40px;border:1px solid var(--line);font-family:var(--sans);font-size:11px;background:var(--paper)}
+.login-demo-note{text-align:center;margin:18px auto 0;max-width:380px;font-family:var(--sans);font-size:9px;line-height:1.55;color:var(--muted)}
+.login-status{text-align:center;min-height:20px;margin-top:9px;font-family:var(--sans);font-size:10px;line-height:1.45;color:var(--gold)}
+[dir=rtl] .login-form,[dir=rtl] .login-shell{text-align:right}
+@media(max-width:560px){.login-shell{padding:30px 20px 24px}.login-shell h2{font-size:32px}.more-login-options{grid-template-columns:1fr}}
