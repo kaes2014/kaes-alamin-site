@@ -4,16 +4,16 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="description" content="KAES PARFUMS. A world of fragrance, feeling and memory. Explore our luxury perfume concept and try the fully simulated shopping experience.">
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer"><meta name="color-scheme" content="light dark">
-<meta name="kaes-release" content="kaes-atelier-20261006-v2">
+<meta name="kaes-release" content="kaes-atelier-20261006-v3">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; base-uri 'none'; form-action 'none'">
 <title>KAES PARFUMS | Wear the memory.</title>
 <link rel="icon" href="./assets/kaes-monogram.svg" type="image/svg+xml">
 <script src="./atelier-preferences.js?v=20261006-1"></script>
-<link rel="stylesheet" href="./atelier.css?v=20261006-2">
+<link rel="stylesheet" href="./atelier.css?v=20261006-3">
 <link rel="stylesheet" href="./atelier-photography.css?v=20261006-1">
 
 <script src="./assets/photography-1.js?v=20261006-1" defer></script><script src="./assets/photography-2.js?v=20261006-1" defer></script><script src="./assets/photography-3.js?v=20261006-1" defer></script>
-<script src="./atelier-i18n.js?v=20261006-2" defer></script><script src="./atelier-products.js?v=20261006-1" defer></script><script src="./atelier.js?v=20261006-2" defer></script>
+<script src="./atelier-i18n.js?v=20261006-3" defer></script><script src="./atelier-products.js?v=20261006-1" defer></script><script src="./atelier.js?v=20261006-3" defer></script>
 </head>
 <body>
 <svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
@@ -37,8 +37,8 @@
 <button class="icon-button mobile-menu" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav" data-label="menu"><svg><use href="#i-menu"/></svg></button>
 <a class="brand" href="#top" aria-label="KAES PARFUMS"><img class="brand-mark" src="./assets/kaes-monogram.svg" width="52" height="60" alt=""><span class="brand-text"><strong>KAES</strong><small>PARFUMS</small></span></a>
 <nav class="desktop-nav" aria-label="Main navigation"><a href="#top" data-t="home">Home</a><a href="#story" data-t="story">Our story</a><a href="#collection" data-t="collection">Collection</a><button data-info="journal" data-t="journal">Journal</button></nav>
-<div class="header-actions"><button class="icon-button" id="search-toggle" data-label="search"><svg><use href="#i-search"/></svg></button><button class="icon-button account-toggle" data-info="account" data-label="account"><svg><use href="#i-user"/></svg></button><button class="icon-button cart-toggle" id="cart-toggle" data-label="bag"><svg><use href="#i-bag"/></svg><span id="bag-count" aria-live="polite">0</span></button></div>
-</div><nav class="mobile-nav" id="mobile-nav" hidden><a href="#top" data-t="home">Home</a><a href="#collection" data-t="collection">Collection</a><a href="#story" data-t="story">Our story</a><button data-info="journal" data-t="journal">Journal</button><button data-info="account" data-t="account">Guest space</button></nav></header>
+<div class="header-actions"><button class="icon-button" id="search-toggle" data-label="search"><svg><use href="#i-search"/></svg></button><button class="icon-button account-toggle" id="account-toggle" data-label="account"><svg><use href="#i-user"/></svg></button><button class="icon-button cart-toggle" id="cart-toggle" data-label="bag"><svg><use href="#i-bag"/></svg><span id="bag-count" aria-live="polite">0</span></button></div>
+</div><nav class="mobile-nav" id="mobile-nav" hidden><a href="#top" data-t="home">Home</a><a href="#collection" data-t="collection">Collection</a><a href="#story" data-t="story">Our story</a><button data-info="journal" data-t="journal">Journal</button><button data-account data-t="account">Guest space</button></nav></header>
 <main id="main">
 <section class="hero" aria-labelledby="hero-title"><div class="hero-photo"><svg class="photo-crop" viewBox="0 0 600 520" preserveAspectRatio="xMidYMin slice" role="img" aria-label="A woman enjoying a perfume ritual." data-alt="heroAlt"><image data-photo="true" width="600" height="1190"/></svg></div><div class="hero-copy"><h1 id="hero-title">KAES<span data-t="parfums">PARFUMS</span></h1><p class="hero-tagline" data-t="heroLine">Wear the memory.</p><p class="hero-description" data-t="heroText">Exquisite inspirations for the moments that become a part of you.</p><a class="button button-dark" href="#collection" data-t="explore">Explore collection</a></div><p class="hero-aside" data-t="heroAside">MORE THAN A SCENT.
 A FEELING THAT STAYS.</p></section>
@@ -56,6 +56,34 @@ become forever.</h2><span class="fine-rule" aria-hidden="true"></span><p data-t=
 <dialog id="bag-dialog" class="bag-dialog" aria-labelledby="bag-title"><div class="drawer-header"><div><p class="eyebrow">KAES PARFUMS</p><h2 id="bag-title" data-t="bag">Shopping bag</h2></div><button class="icon-button" data-close data-label="close"><svg><use href="#i-close"/></svg></button></div><div id="bag-content"></div></dialog>
 <dialog id="checkout-dialog" class="checkout-dialog" aria-labelledby="checkout-title"><div class="dialog-heading"><div><p class="eyebrow">KAES PARFUMS &middot; DEMO</p><h2 id="checkout-title" data-t="checkoutTitle">The checkout, reimagined.</h2></div><button class="icon-button" data-close data-label="close"><svg><use href="#i-close"/></svg></button></div><div id="checkout-content"></div></dialog>
 <dialog id="search-dialog" class="search-dialog" aria-labelledby="search-title"><div class="dialog-heading"><h2 id="search-title" data-t="searchTitle">Find your next feeling.</h2><button class="icon-button" data-close data-label="close"><svg><use href="#i-close"/></svg></button></div><label class="search-field"><svg><use href="#i-search"/></svg><input id="search-input" type="search" autocomplete="off" maxlength="100" data-placeholder="searchHint" data-label="search"></label><div id="search-results" aria-live="polite"></div></dialog>
+<dialog id="login-dialog" class="login-dialog" aria-labelledby="login-title">
+  <div class="login-shell">
+    <button class="icon-button dialog-close" data-close data-label="close"><svg><use href="#i-close"/></svg></button>
+    <div class="login-brand"><img src="./assets/kaes-monogram.svg" width="42" height="48" alt=""><span>KAES PARFUMS</span></div>
+    <p class="eyebrow" data-t="loginEyebrow">YOUR KAES SPACE</p>
+    <h2 id="login-title" data-t="loginTitle">Welcome back.</h2>
+    <p class="login-intro" data-t="loginIntro">Sign in to continue your perfume journey.</p>
+    <div class="social-login-grid">
+      <button type="button" class="social-login google" data-login-provider="Google"><span class="provider-mark">G</span><span data-t="continueGoogle">Continue with Google</span></button>
+      <button type="button" class="social-login facebook" data-login-provider="Facebook"><span class="provider-mark">f</span><span data-t="continueFacebook">Continue with Facebook</span></button>
+      <button type="button" class="social-login apple" data-login-provider="Apple"><span class="provider-mark"></span><span data-t="continueApple">Continue with Apple</span></button>
+      <button type="button" class="social-login microsoft" data-login-provider="Microsoft"><span class="provider-mark provider-ms"><i></i><i></i><i></i><i></i></span><span data-t="continueMicrosoft">Continue with Microsoft</span></button>
+    </div>
+    <div class="login-divider"><span data-t="orEmail">or continue with email</span></div>
+    <form id="login-form" class="login-form">
+      <label for="login-email" data-t="emailAddress">Email address</label>
+      <input id="login-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="name@example.com" required>
+      <button type="submit" class="button button-dark button-wide" data-t="continueEmail">Continue with email</button>
+    </form>
+    <button type="button" class="login-more" id="login-more" data-t="moreLoginOptions">More ways to sign in</button>
+    <div class="more-login-options" id="more-login-options" hidden>
+      <button type="button" data-login-provider="Passkey" data-t="continuePasskey">Use a passkey</button>
+      <button type="button" data-login-provider="Phone" data-t="continuePhone">Continue with phone</button>
+    </div>
+    <p class="login-demo-note" data-t="loginDemoNote">Demo only — no real account is created and no sign-in information is sent anywhere.</p>
+    <p class="login-status" id="login-status" role="status" aria-live="polite"></p>
+  </div>
+</dialog>
 <dialog id="info-dialog" class="info-dialog" aria-labelledby="info-title"><button class="icon-button dialog-close" data-close data-label="close"><svg><use href="#i-close"/></svg></button><p class="eyebrow">KAES PARFUMS</p><h2 id="info-title"></h2><div id="info-content"></div></dialog>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body></html>
