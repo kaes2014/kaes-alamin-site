@@ -76,3 +76,12 @@ dialog{background:var(--panel);color:var(--ink);padding:0;border:1px solid var(-
  .settings-menu{position:fixed;top:auto;inset-inline:8px;bottom:8px;width:auto;max-height:min(72dvh,520px);overflow:auto;border-radius:0}
  .settings-menu:before{display:none}
 }
+
+/* Logged-in default profile avatar */
+.account-toggle{position:relative}
+.default-profile-avatar{width:31px;height:31px;border-radius:50%;border:1px solid var(--ink);background:var(--paper2);display:grid;place-items:center;overflow:hidden;position:relative}
+.default-profile-avatar[hidden]{display:none!important}
+.avatar-head{position:absolute;top:6px;width:9px;height:9px;border-radius:50%;background:var(--ink)}
+.avatar-body{position:absolute;bottom:4px;width:18px;height:10px;border-radius:12px 12px 4px 4px;background:var(--ink)}
+.account-toggle.is-logged-in{padding:5px}
+.account-toggle.is-logged-in:hover .default-profile-avatar{border-color:var(--gold);box-shadow:0 0 0 2px color-mix(in srgb,var(--gold) 18%,transparent)}
