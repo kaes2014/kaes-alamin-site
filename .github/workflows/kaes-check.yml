@@ -1,0 +1,161 @@
+name: KAES boutique checks
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: kaes-checks
+  cancel-in-progress: true
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Read the exact committed website
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Check JavaScript syntax
+        run: |
+          for file in atelier*.js assets/photography-*.js; do node --check "$file"; done
+      - name: Install isolated browser test tools
+        run: |
+          npm install --prefix "$RUNNER_TEMP/kaes-qa" --no-save --no-package-lock playwright@1.63.0
+          node "$RUNNER_TEMP/kaes-qa/node_modules/playwright/cli.js" install --with-deps chromium
+      - name: Test languages, themes, search, products, cart and demo checkout
+        env:
+          NODE_PATH: ${{ runner.temp }}/kaes-qa/node_modules
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/kaes-http.log 2>&1 &
+          node <<'NODE'
+          const {chromium}=require('playwright');
+          const assert=require('node:assert/strict');
+          (async()=>{
+            const browser=await chromium.launch({headless:true});
+            const errors=[],external=[];
+            let checks=0;
+            const pass=message=>{checks++;console.log('PASS '+message)};
+            const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+            const page=await context.newPage();
+            page.on('pageerror',e=>errors.push(e.message));
+            page.on('request',r=>{if(/^https?:/.test(r.url())&&!r.url().startsWith('http://127.0.0.1:8765/'))external.push(r.url())});
+            await page.goto('http://127.0.0.1:8765/',{waitUntil:'networkidle'});
+            await page.waitForSelector('.product-card');
+            assert.equal(await page.locator('.product-card').count(),5);pass('Five concept fragrances render');
+            assert.match(await page.title(),/KAES PARFUMS/);pass('KAES branding');
+            assert.equal(await page.evaluate(()=>document.querySelectorAll('image[data-photo]').length),2);
+            assert.equal(await page.evaluate(()=>Boolean(window.KAES_PHOTO_URI?.startsWith('data:image/'))),true);pass('Local photography loads');
+            for(const lang of ['en','sv','ar']){
+              await page.locator('[data-lang="'+lang+'"]').click();
+              assert.equal(await page.locator('html').getAttribute('lang'),lang);
+              assert.equal(await page.locator('html').getAttribute('dir'),lang==='ar'?'rtl':'ltr');
+              for(const width of [390,768,1440]){
+                await page.setViewportSize({width,height:950});
+                assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Horizontal overflow: '+lang+'/'+width);
+              }
+              for(const theme of ['dark','light']){
+                await page.locator('#theme-toggle').click();
+                assert.equal(await page.locator('html').getAttribute('data-theme'),theme);
+              }
+              pass('Language '+lang+', RTL, both themes, 3 viewport sizes');
+            }
+            await page.locator('[data-lang="en"]').click();
+            await page.locator('#search-toggle').click();
+            await page.locator('#search-input').fill('Ivory');
+            assert.equal(await page.locator('.search-result').count(),1);
+            await page.locator('.search-result').click();
+            assert.equal(await page.locator('#product-title').innerText(),'Ivory Bloom');
+            assert.equal(await page.locator('#product-dialog .payment-badge').count(),5);pass('Search and product details, all payment badges');
+            await page.locator('[data-size="100"]').click();
+            await page.locator('[data-detail="true"]').click();
+            await page.waitForSelector('#bag-dialog[open]');
+            assert.equal(await page.locator('#bag-count').innerText(),'1');
+            await page.locator('[data-delta="1"]').click();
+            assert.equal(await page.locator('#bag-count').innerText(),'2');
+            await page.locator('[data-delta="-1"]').click();
+            await page.locator('#coupon-input').fill('KAES10');
+            await page.locator('#coupon-form button').click();
+            assert.ok(await page.locator('#coupon-message').innerText());
+            await page.locator('#bag-dialog [data-close]').click();
+            await page.reload({waitUntil:'networkidle'});
+            assert.equal(await page.locator('#bag-count').innerText(),'1');pass('Sizes, cart quantity, coupon and tab persistence');
+            for(const payment of ['Klarna','Swish','Mastercard','Visa','PayPal']){
+              if((await page.locator('#bag-count').innerText())==='0'){
+                await page.locator('.discover-button').first().click();
+                await page.locator('[data-detail="true"]').click();
+              }else{await page.locator('#cart-toggle').click()}
+              await page.locator('[data-checkout]').click();
+              await page.locator('input[name="delivery"][value="express"]').check();
+              await page.locator('[data-next]').click();
+              await page.locator('input[name="payment"][value="'+payment+'"]').check();
+              assert.equal(await page.locator('#checkout-dialog input[type="password"], #checkout-dialog input[type="email"], #checkout-dialog input[name="card-number"]').count(),0);
+              await page.locator('[data-next]').click();
+              await page.locator('[data-confirm]').click();
+              await page.waitForSelector('.reference-box strong');
+              assert.match(await page.locator('.reference-box strong').innerText(),/^DEMO-KAES-/);
+              assert.equal(await page.locator('#bag-count').innerText(),'0');
+              await page.locator('#checkout-dialog [data-shop]').click();
+              pass(payment+' complete simulated order, no card data collected');
+            }
+            await page.setViewportSize({width:390,height:844});
+            await page.locator('[data-lang="ar"]').click();
+            await page.locator('#theme-toggle').click();
+            await page.locator('#menu-toggle').click();
+            assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'true');
+            await page.locator('#mobile-nav a[href="#collection"]').click();
+            assert.equal(await page.locator('#menu-toggle').getAttribute('aria-expanded'),'false');
+            await page.locator('.discover-button').first().click();
+            await page.locator('[data-detail="true"]').click();
+            await page.locator('[data-checkout]').click();
+            assert.equal(await page.locator('html').getAttribute('dir'),'rtl');
+            assert.ok(await page.locator('#checkout-dialog').evaluate(e=>e.scrollWidth<=e.clientWidth+1));
+            await page.locator('[data-next]').click();await page.locator('[data-next]').click();
+            await page.locator('[data-confirm]').click();await page.waitForSelector('.reference-box');
+            pass('Arabic mobile dark-mode checkout');
+            assert.deepEqual(errors,[]);assert.deepEqual(external,[]);
+            pass('No JavaScript errors, third-party calls, advertising or tracking requests');
+            console.log('BROWSER CHECKS PASSED: '+checks);
+            await browser.close();
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - name: Verify Hostinger serves the committed release
+        if: always()
+        run: |
+          python3 <<'PY'
+          import hashlib,json,time,urllib.request,urllib.parse
+          from pathlib import Path
+          from html.parser import HTMLParser
+          base='https://kaes.alamin.se/'
+          class Assets(HTMLParser):
+              def __init__(self): super().__init__(); self.paths=set()
+              def handle_starttag(self,tag,attrs):
+                  a=dict(attrs)
+                  if tag=='script' and a.get('src'): self.paths.add(a['src'])
+                  if tag=='link' and a.get('rel') in ('stylesheet','icon') and a.get('href'): self.paths.add(a['href'])
+                  if tag=='img' and a.get('src'): self.paths.add(a['src'])
+          expected=Path('index.html').read_bytes()
+          marker=json.loads(Path('release.json').read_text())['release']
+          def read(path):
+              req=urllib.request.Request(urllib.parse.urljoin(base,path),headers={'User-Agent':'KAES-deployment-check','Cache-Control':'no-cache'})
+              with urllib.request.urlopen(req,timeout=15) as r: return r.read(),r.status,r.url
+          live=None
+          for attempt in range(10):
+              try:
+                  data,status,url=read('?verify='+str(int(time.time())))
+                  if data.strip()==expected.strip(): live=data;break
+                  print('Waiting for deployed index.html; attempt',attempt+1,'status',status,'expected release',marker,flush=True)
+              except Exception as e: print('Live request:',str(e),flush=True)
+              if attempt<9: time.sleep(12)
+          if live is None: raise SystemExit('LIVE NOT VERIFIED: Hostinger has not served the committed index.html, or the domain is unreachable. No hosting settings were changed.')
+          parser=Assets();parser.feed(live.decode('utf-8'))
+          for path in sorted(parser.paths):
+              local=Path(urllib.parse.urlparse(path).path.removeprefix('./'))
+              data,status,_=read(path)
+              assert data==local.read_bytes(), 'Asset mismatch: '+path
+              print('LIVE ASSET OK',path,status)
+          data,status,url=read('')
+          assert data.strip()==expected.strip(),'CDN is still serving stale HTML at the plain URL'
+          print('LIVE VERIFIED:',url,'HTTP',status,'release',marker,'index sha256',hashlib.sha256(data).hexdigest())
+          PY
