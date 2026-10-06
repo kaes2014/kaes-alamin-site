@@ -18,3 +18,9 @@ dialog{background:var(--panel);color:var(--ink);padding:0;border:1px solid var(-
 @media(prefers-reduced-motion:reduce){:root{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
 
 .photo-crop{display:block;width:100%;height:auto;overflow:hidden;stroke:none}.hero-photo .photo-crop{height:100%}.story-photo.photo-crop{height:100%}.product-detail-photo .photo-crop{aspect-ratio:1.21}.bag-row>.photo-crop{width:82px;height:92px}.summary-item .photo-crop{width:48px;height:52px}.search-result .photo-crop{width:85px;height:85px}@media(max-width:600px){.story-photo.photo-crop{height:auto;aspect-ratio:1.55}.product-detail-photo .photo-crop{height:auto;aspect-ratio:1.2}}
+
+/* Approved KAES perfume emblem in header */
+.header-brand{gap:14px}
+.header-brand .perfume-emblem{width:72px;height:62px;object-fit:cover;object-position:center;border-radius:2px;flex-shrink:0}
+@media(max-width:850px){.header-brand .perfume-emblem{width:54px;height:47px}.header-brand{gap:8px}}
+@media(max-width:600px){.header-brand .perfume-emblem{width:44px;height:38px}.header-brand{gap:6px}}
