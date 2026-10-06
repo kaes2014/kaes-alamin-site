@@ -33,7 +33,7 @@ function translate(){
  $('#theme-toggle').setAttribute('aria-label',t(document.documentElement.dataset.theme==='dark'?'light':'dark'));
  const themeValue=$('#settings-theme-value');if(themeValue)themeValue.textContent=t(document.documentElement.dataset.theme==='dark'?'darkMode':'lightMode');
  updateAccountUi();
- $('[data-payments]').forEach(e=>e.innerHTML=badges());
+ $$('[data-payments]').forEach(e=>e.innerHTML=badges());
  document.title='KAES PARFUMS | '+t('heroLine');
 }
 function renderGrid(){
